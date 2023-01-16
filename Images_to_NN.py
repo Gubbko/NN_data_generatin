@@ -28,7 +28,7 @@ sign_size3 = (80, 80)
 ####################################################################################################
 # Next part you don't need to change
 
-def add_sign_without_background(frame_to, sign, x = 0, y = 0):
+def add_sign_without_background_to_image(frame_to, sign, x = 0, y = 0):
     for i in range(len(sign)):
         for j in range(len(sign[i])):
             if (
@@ -58,15 +58,15 @@ while 1:
 
     if count % every_frame == 0:
         #frame_to_write = add_sign_without_background(frame, sign1, 0, 0)
-        imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+1), add_sign_without_background(frame1, sign1, 0, 0))
+        imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+1), add_sign_without_background_to_image(frame1, sign1, 0, 0))
         #imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+1), frame_to_write)
         
         #frame_to_write2 = add_sign_without_background(frame, sign2, -70 , -60)
-        imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+2), add_sign_without_background(frame2, sign2, -70 , -60))
+        imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+2), add_sign_without_background_to_image(frame2, sign2, -70 , -60))
         #imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+2), frame_to_write2)
         
         #frame_to_write3 = add_sign_without_background(frame, sign3, -80, 110)
-        imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+3), add_sign_without_background(frame3, sign3, -80, 110))
+        imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+3), add_sign_without_background_to_image(frame3, sign3, -80, 110))
         #imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1+3), frame_to_write3)
         count_1 = count_1 + 3
     count = count + 1
