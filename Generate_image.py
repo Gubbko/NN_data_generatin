@@ -1,5 +1,5 @@
 # sourcery skip: hoist-statement-from-loop, merge-nested-ifs
-from cv2 import VideoCapture, imread, resize, imwrite, rectangle
+from cv2 import VideoCapture, resize
 import random
 # https://docs.opencv.org/3.4/d9/d61/tutorial_py_morphological_ops.html
 
