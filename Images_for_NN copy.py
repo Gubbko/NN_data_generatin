@@ -112,13 +112,18 @@ def add_sign_without_background_to_image(frame_to, sign, x, y):
     #rectangle(frame_to,(y,x),(y+len(sign[0]),x+len(sign)),(0,255,0),2)
     return frame_to
 
+def resize_training_image(sign, min = 80, max = 120):
+    size = random.randint(min, max)
+    sign = resize(sign, [size, size])
+    return sign
+
 cap1 = VideoCapture(Video_Path[0])
 count = 0
 count_1 = 2598
 
-sign1 = resize(img_for_training[2], sign_size1)
-sign2 = resize(img_for_training[2], sign_size2)
-sign3 = resize(img_for_training[2], sign_size3)
+#sign1 = resize(img_for_training[2], sign_size1)
+#sign2 = resize(img_for_training[2], sign_size2)
+#sign3 = resize(img_for_training[2], sign_size3)
 
 while 1:
     try:
@@ -128,7 +133,10 @@ while 1:
         
         if count % every_frame == 0:
             
-        
+            sign1 = resize_training_image(img_for_training[2], 60, 80)
+            sign2 = resize_training_image(img_for_training[2], 80, 100)
+            sign3 = resize_training_image(img_for_training[2], 100, 120)
+
             x1, y1 = rand_chords(frame1, sign1)
             x2, y2 = rand_chords(frame2, sign2)
             x3, y3 = rand_chords(frame3, sign3)
