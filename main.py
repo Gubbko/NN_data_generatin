@@ -1,4 +1,5 @@
 import Generate_image
+from tqdm import tqdm, trange
 from cv2 import imread, imwrite, CAP_PROP_FRAME_COUNT, VideoCapture
 
 Video_Path = [
@@ -49,7 +50,7 @@ img_for_training = [
     imread("C:\\Users\\Gubbko\\Desktop\\Bosch\\Lane_2023\\all_signs\\Stop_3.jpg")
     ]
 
-every_frame = 3
+every_frame = 8
 
 # here you can cut collor of background
 upperbounds_for_chromokey = [220, 220, 220]
@@ -57,18 +58,10 @@ lowerbounds_for_chromokey = [0, 0, 0]
 bounds = [upperbounds_for_chromokey, lowerbounds_for_chromokey]
 
 cap0 = Generate_image.images_by_video(Video_Path[0], every_frame)
-cap1 = Generate_image.images_by_video(Video_Path[1], every_frame)
-cap2 = Generate_image.images_by_video(Video_Path[2], every_frame)
-cap3 = Generate_image.images_by_video(Video_Path[3], every_frame)
-cap4 = Generate_image.images_by_video(Video_Path[4], every_frame)
 
-print(cap0.get_video_lenght())
-print(cap1.get_video_lenght())
-print(cap2.get_video_lenght())
-print(cap3.get_video_lenght())
-print(cap4.get_video_lenght())
+video_lenght0 = cap0.get_video_lenght()
 
-"""
+
 count = 0
 count_1 = 0
 
@@ -78,54 +71,20 @@ def prosidure(cap, frame, sign_to):
     x, y = cap.rand_chords(frame, sign)
     imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1), cap.add_sign_without_background_to_image(frame, sign, x, y, bounds))
     count_1 += 1
-    progress_bar(count, 20000)
 
-def progress_bar(progress, total):
-    percent = 100 * (progress / float(total))
-    bar = ' ' * int(percent / 2) + '-' * (50 - int(percent / 2))
-    print(f"\r|{bar}| {percent:.3f}%", end="\r")
-
-while 1:
-    try:
+try:
+    for _ in trange(video_lenght0 - 1):
         if count % every_frame == 0:
             
             frame0 = cap0.get_frame()
-            frame1 = cap1.get_frame()
-            frame2 = cap2.get_frame()
-            frame3 = cap3.get_frame()
-            frame4 = cap4.get_frame()
-            
             prosidure(cap0, frame0, img_for_training[0])
-            prosidure(cap1, frame1, img_for_training[0])
-            prosidure(cap2, frame2, img_for_training[0])
-            prosidure(cap3, frame3, img_for_training[0])
-            prosidure(cap4, frame4, img_for_training[0])
             
             frame0 = cap0.get_frame()
-            frame1 = cap1.get_frame()
-            frame2 = cap2.get_frame()
-            frame3 = cap3.get_frame()
-            frame4 = cap4.get_frame()
-            
             prosidure(cap0, frame0, img_for_training[1])
-            prosidure(cap1, frame1, img_for_training[1])
-            prosidure(cap2, frame2, img_for_training[1])
-            prosidure(cap3, frame3, img_for_training[1])
-            prosidure(cap4, frame4, img_for_training[1])
             
             frame0 = cap0.get_frame()
-            frame1 = cap1.get_frame()
-            frame2 = cap2.get_frame()
-            frame3 = cap3.get_frame()
-            frame4 = cap4.get_frame()
-            
             prosidure(cap0, frame0, img_for_training[2])
-            prosidure(cap1, frame1, img_for_training[2])
-            prosidure(cap2, frame2, img_for_training[2])
-            prosidure(cap3, frame3, img_for_training[2])
-            prosidure(cap4, frame4, img_for_training[2])
+            
         count = count + 1
-    except KeyboardInterrupt:
-        print("Interupt")
-        break
-"""
+except KeyboardInterrupt:
+    print("Interupt")
