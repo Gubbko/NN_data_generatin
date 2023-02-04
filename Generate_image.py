@@ -1,5 +1,5 @@
 # sourcery skip: hoist-statement-from-loop, merge-nested-ifs
-from cv2 import VideoCapture, resize
+from cv2 import VideoCapture, resize, CAP_PROP_FRAME_COUNT
 import random
 # https://docs.opencv.org/3.4/d9/d61/tutorial_py_morphological_ops.html
 
@@ -10,6 +10,9 @@ class images_by_video():
 
     def get_frame(self):
         return self.cap.read()[1]
+    
+    def get_video_lenght(self):
+        return int(self.cap.get(CAP_PROP_FRAME_COUNT))
     
     def rand_chords(self, img, sign):
         base_x = len(img)

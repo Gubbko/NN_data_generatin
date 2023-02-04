@@ -1,5 +1,5 @@
 import Generate_image
-from cv2 import imread, imwrite
+from cv2 import imread, imwrite, CAP_PROP_FRAME_COUNT, VideoCapture
 
 Video_Path = [
     "C:\\Users\\Gubbko\\Desktop\\Bosch\\Videos\\" + "21-09-17-12-39-53.mp4",
@@ -62,6 +62,13 @@ cap2 = Generate_image.images_by_video(Video_Path[2], every_frame)
 cap3 = Generate_image.images_by_video(Video_Path[3], every_frame)
 cap4 = Generate_image.images_by_video(Video_Path[4], every_frame)
 
+print(cap0.get_video_lenght())
+print(cap1.get_video_lenght())
+print(cap2.get_video_lenght())
+print(cap3.get_video_lenght())
+print(cap4.get_video_lenght())
+
+"""
 count = 0
 count_1 = 0
 
@@ -121,3 +128,4 @@ while 1:
     except KeyboardInterrupt:
         print("Interupt")
         break
+"""
