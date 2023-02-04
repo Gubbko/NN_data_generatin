@@ -1,6 +1,9 @@
 import Generate_image
-from tqdm import tqdm, trange
-from cv2 import imread, imwrite, CAP_PROP_FRAME_COUNT, VideoCapture
+from tqdm import trange
+import colorama
+from cv2 import imread, imwrite
+
+debug = True
 
 Video_Path = [
     "C:\\Users\\Gubbko\\Desktop\\Bosch\\Videos\\" + "21-09-17-12-39-53.mp4",
@@ -50,7 +53,7 @@ img_for_training = [
     imread("C:\\Users\\Gubbko\\Desktop\\Bosch\\Lane_2023\\all_signs\\Stop_3.jpg")
     ]
 
-every_frame = 8
+every_frame = 1
 
 # here you can cut collor of background
 upperbounds_for_chromokey = [220, 220, 220]
@@ -63,28 +66,38 @@ video_lenght0 = cap0.get_video_lenght()
 
 
 count = 0
-count_1 = 0
+count_of_images = 0
 
 def prosidure(cap, frame, sign_to):
-    global count_1
+    global count_of_images
     sign = cap.resize_training_image(sign_to, 60, 120)
     x, y = cap.rand_chords(frame, sign)
-    imwrite(Path_to_save_images + "/%#05d.jpg" % (count_1), cap.add_sign_without_background_to_image(frame, sign, x, y, bounds))
-    count_1 += 1
+    imwrite(Path_to_save_images + "/%#05d.jpg" % (count_of_images), cap.add_sign_without_background_to_image(frame, sign, x, y, bounds))
+    count_of_images += 1
+
 
 try:
-    for _ in trange(video_lenght0 - 1):
+    print(f"{colorama.Fore.YELLOW}\r")
+    
+    for _ in trange(video_lenght0 - 1, desc='Video proccesed', unit=' frames', disable = not debug):
         if count % every_frame == 0:
-            
+
             frame0 = cap0.get_frame()
             prosidure(cap0, frame0, img_for_training[0])
-            
+
             frame0 = cap0.get_frame()
             prosidure(cap0, frame0, img_for_training[1])
-            
+
             frame0 = cap0.get_frame()
             prosidure(cap0, frame0, img_for_training[2])
-            
+
         count = count + 1
+
+    print(f"{colorama.Fore.GREEN}\r")
+    print(f'Program has generated {count_of_images} images')
+    print(f"{colorama.Fore.WHITE}\r")
 except KeyboardInterrupt:
-    print("Interupt")
+    print(f"{colorama.Fore.RED}\r")
+    print("Program was stoped by interupt")
+    print(f'Program has generated {count_of_images} images')
+    print(f"{colorama.Fore.RESET}\r")
